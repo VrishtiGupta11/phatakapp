@@ -1,0 +1,45 @@
+<div class="container mt-3">
+  <div class="mt-4 p-5 bg-primary text-white rounded" *ngIf="showForm">
+    <h1>Phatak Backend</h1> 
+    <p>You can easily manage railway crossings form this backend</p> 
+  </div>
+</div>
+
+<div class="p-5" *ngIf="showForm">
+    <!-- to bind form and store in typescript variables -->
+    <form [formGroup]="phatakForm">
+    <div class="mb-3 mt-3">
+      <label for="phatakname" class="form-label">Phatak Name:</label>
+      <input type="text" class="form-control" id="phatakname" placeholder="Phatak Name" name="phatakname" formControlName="phatakName">
+    </div>
+    
+    <div class="mb-3 mt-3">
+      <label for="inchargename">Person In Charge Name:</label>
+      <input type="text" class="form-control" id="inchargename" placeholder="Enter Person In Charge" name="inchargename" formControlName="inchargeName">
+    </div>
+
+    <div class="mb-3 mt-3">
+      <label for="inchargephone">Person In Charge Phone:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter Person In Charge Phone" name="inchargephone" formControlName="inchargePhone">
+    </div>
+
+    <div class="mb-3 mt-3">
+      <label for="latitude">Phatak Latitude:</label>
+      <input type="text" class="form-control" id="latitude" placeholder="Enter Phatak Latitude" name="latitude" formControlName="latitude">
+    </div>
+
+    <div class="mb-3 mt-3">
+      <label for="longitude">Phatak Longitude:</label>
+      <input type="text" class="form-control" id="longitude" placeholder="Enter Phatak Longitude" name="longitude" formControlName="longitude">
+    </div>
+
+    <div class="mb-3 mt-3">
+      <label for="phatakimage">Select Phatak Image:</label>
+      <input type="file" class="form-control" id="phatakimage" name="phatakimage" formControlName="phatakImage">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <p>{{phatakForm.value | json}}</p>
+</div>

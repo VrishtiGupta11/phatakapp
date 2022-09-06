@@ -1,0 +1,70 @@
+.container-1-phatak {
+    background-color: #026E8C74;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.color-1-phatak {
+    color: rgba(255, 255, 255, 0.822);
+}
+
+.btn-phatak {
+    background-color: #013352;
+    color: white;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.btn-danger {
+    background-color: #BB2D3B; 
+}
+
+.form-field-phatak {
+    margin-left: 15%;
+    margin-right: 15%;
+    color: #013352;
+}
+
+.form-field-input-phatak {
+    /* background-image: linear-gradient(to right, #92a5aa, #e0e6e8, #92a5aa); */
+    background-image: linear-gradient(to right, #026e8c34, #026e8c63, #026e8c34);
+    /* color: rgba(255, 255, 255, 0.822); */
+    border: none;
+    padding-left: 15%;
+    box-shadow: none;
+    outline: none; 
+}
+
+.container-2-phatak {
+    height: 1px;
+    background-color: black;
+}
+
+.form-label {
+    margin-bottom: 0;
+}
+
+.submit-btn-phatak {
+    margin-left: 48%;
+    margin-right: 280px;
+    margin-top: 20px;
+}
+
+.add-phatak {
+    margin-left: 45%;
+}
+
+.img-phatak {
+    height: 500px;
+    width: 500px;
+    position: relative;
+}
+
+.btn-update-delete-phatak {
+    /* margin-left: 5px; */
+    margin-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 7.5px;
+    padding-bottom: 7.5px;
+}

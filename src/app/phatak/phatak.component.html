@@ -1,13 +1,13 @@
-<div class="container mt-3">
+<!-- <div class="container mt-3">
   <div class="mt-4 p-5 bg-primary text-white rounded" *ngIf="showForm">
     <h1>Phatak Backend</h1> 
     <p>You can easily manage railway crossings form this backend</p> 
   </div>
 </div>
 
-<div class="p-5" *ngIf="showForm">
+<div class="p-5" *ngIf="showForm"> -->
     <!-- to bind form and store in typescript variables -->
-    <form [formGroup]="phatakForm">
+    <!-- <form [formGroup]="phatakForm">
     <div class="mb-3 mt-3">
       <label for="phatakname" class="form-label">Phatak Name:</label>
       <input type="text" class="form-control" id="phatakname" placeholder="Phatak Name" name="phatakname" formControlName="phatakName">
@@ -42,4 +42,126 @@
   </form>
 
   <p>{{phatakForm.value | json}}</p>
+</div> -->
+
+<div class="p-5 mt-3 mb-3 rounded container-1-phatak">
+  <h1 class="text-white">Phatak Backend</h1>
+  <p class="color-1-phatak">You can easily manage railway crossings form this backend</p>
+  <button class="btn btn-phatak" (click)="showForm = !showForm">{{showForm ? 'Hide' : 'Show'}}</button>
+</div>
+
+<div class="row">
+  
+  <!-- <img src="../../assets/train.png" class="img-phatak col-4"> -->
+  
+  <div *ngIf="showForm">
+    <h3 class="add-phatak mb-3">Add New Phatak</h3>
+    <form [formGroup]="phatakForm" (ngSubmit)="addPhatakToFirebase()">
+      <div class="mb-3">
+        <label for="phatakName" class="form-label form-field-phatak">Phatak Name:</label>
+        <input type="text" id="phatakName" name="phatakName" formControlName="phatakName" class="form-control form-field-input-phatak">
+        <div class="form-field-phatak container-2-phatak"></div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="inchargeName" class="form-label form-field-phatak">Person In Charge Name:</label>
+        <input type="text" id="inchargeName" name="inchargeName" formControlName="inchargeName" class="form-control form-field-input-phatak">
+        <div class="form-field-phatak container-2-phatak"></div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="inchargePhone" class="form-label form-field-phatak">Person In Charge Phone:</label>
+        <input type="text" id="inchargePhone" name="inchargePhone" formControlName="inchargePhone" class="form-control form-field-input-phatak">
+        <div class="form-field-phatak container-2-phatak"></div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="latitude" class="form-label form-field-phatak">Phatak Latitude:</label>
+        <input type="text" id="latitude" name="latitude" formControlName="latitude" class="form-control form-field-input-phatak">
+        <div class="form-field-phatak container-2-phatak"></div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="longitude" class="form-label form-field-phatak">Phatak Longitude:</label>
+        <input type="text" id="longitude" name="longitude" formControlName="longitude" class="form-control form-field-input-phatak">
+        <div class="form-field-phatak container-2-phatak"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="status" class="form-label form-field-phatak">Status:</label>
+        <input type="number" id="status" name="status" formControlName="status" class="form-control form-field-input-phatak">
+        <div class="form-field-phatak container-2-phatak"></div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="phatakimage" class="form-label form-field-phatak">Select Phatak Image:</label>
+        <!-- To select multiple images -->
+        <!-- <input type="file" id="phatakimage" name="phatakimage" formControlName="phatakImage" class="form-control form-field-input-phatak" (change)="selectImage($event)" multiple> -->
+        <input type="file" id="phatakimage" name="phatakimage" formControlName="phatakImage" class="form-control form-field-input-phatak" (change)="selectImage($event)">
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-between form-field-phatak mb-3">
+            <label for="phatakimage" class="form-label">Timings:</label>
+            <button type="button" class="btn btn-phatak btn-sm btn-update-delete-phatak" (click)="addTimingsDetailToPhatak()">Add Timings</button>
+          </div>
+        </div>
+        <div class="col-12" formArrayName="timings" *ngFor="let _ of getTimingsArrayFromPhatakForm().controls; index as idx">
+          <div [formGroupName]="idx"  class="row form-field-phatak p-2">
+            <div class="col">
+              <label for="trainName">Train Name</label>
+              <input class="form-control" type="text" name="train" id="train" formControlName="train">
+            </div>
+            <div class="col">
+              <label for="trafficStatus">Traffic Status</label>
+              <input class="form-control" type="text" name="trafficStatus" id="trafficStatus" formControlName="trafficStatus">
+            </div>
+            <div class="col">
+              <label for="time">Time</label>
+              <input class="form-control" type="datetime-local" name="time" id="time" formControlName="time">
+            </div>
+            <!-- <div class="col d-flex justify-content-center align-items-center">
+              <button class="btn btn-phatak btn-sm btn-update-delete-phatak mt-4 w-100">Update</button>
+            </div> -->
+            <div class="col d-flex justify-content-center align-items-center">
+              <button class="btn btn-danger btn-sm btn-update-delete-phatak mt-4 w-100" (click)="removeTimingsDetailFromPhatak(idx)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <button class="btn btn-phatak submit-btn-phatak">Submit</button>
+    </form>
+  
+    <!-- <p>{{phatakForm.value | json}}</p> -->
+  </div>
+</div>
+
+<div class="container mt-3" *ngIf="!showForm">
+  <h2>Phatak Lists</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Phatak Name</th>
+        <th>Person In Charge Name</th>
+        <th>Person In Charge Phone</th>
+        <th>Phatak Coordinates</th>
+        <th>Phatak Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let phatak of phataksList; index as idx">
+        <td>{{ idx+1 }}</td>
+        <td>{{ phatak.phatakName }}</td>
+        <td>{{ phatak.inchargeName }}</td>
+        <td>{{ phatak.inchargePhone }}</td>
+        <td>[{{ phatak.latitude }}, {{ phatak.longitude }}]</td>
+        <td>{{ phatak.status }}</td>
+        <button class="btn btn-sm btn-phatak btn-update-delete-phatak" (click)="updatePhatak(phatak)">Update</button>
+        <button class="btn btn-sm btn-danger btn-update-delete-phatak" (click)="deletePhatak(phatak['id'])">Delete</button>
+      </tr>
+    </tbody>
+  </table>
 </div>

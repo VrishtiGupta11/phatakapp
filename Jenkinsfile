@@ -5,7 +5,7 @@ pipeline {
         stage('Source') {
             steps {
                 // Get  code from a GitHub repository
-                git 'https://github.com/VrishtiGupta11/Application-development.git'
+                git 'https://github.com/VrishtiGupta11/phatakapp.git'
 
                 // Run npm install
                 sh "npm install"

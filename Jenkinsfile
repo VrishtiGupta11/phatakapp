@@ -20,6 +20,7 @@ pipeline {
                 //  sh "npm run cypress:run"         
                 // bat "npm run cy:open"         
                 bat "npm run cy:run"         
+                echo 'Test Stage Finished'
             }
         }
 
@@ -28,7 +29,14 @@ pipeline {
                 // Run ng build command
                 // bat "ng build"
                 bat "npm run ng -- build"
-                echo 'Test Stage Finished'
+                echo 'Build Stage Finished'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat "firebase deploy --only hosting"
+                echo 'Deploy Stage Finished'
             }
         }
     }

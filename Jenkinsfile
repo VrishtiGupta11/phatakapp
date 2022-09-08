@@ -18,7 +18,7 @@ pipeline {
             steps {
                 //sh(script: 'node_modules/.bin/cypress run || true')
                 //  sh "npm run cypress:run"         
-                bat "npm run cy:open"         
+                // bat "npm run cy:open"         
                 bat "npm run cy:run"         
             }
         }

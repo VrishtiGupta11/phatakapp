@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PhatakComponent } from './phatak/phatak.component';
 
 const routes: Routes = [
-  {path: "", redirectTo: "phatak", pathMatch: "full" },
-  {path: "phatak", component: PhatakComponent}
+  // {path: "", redirectTo: "", pathMatch: "full" },
+  {path: "", component: PhatakComponent}
 ];
 
 @NgModule({

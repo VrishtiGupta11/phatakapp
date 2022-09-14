@@ -1,6 +1,9 @@
 pipeline {
     // agent any means => jenkins, find us what is required? to build with node or what
     agent any
+    environment {
+        firebaseToken = credentials('firebaseToken');
+    }
     stages {
         stage('Source') {
             steps {
@@ -35,7 +38,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat "firebase deploy --only hosting"
+                bat "firebase deploy --non-interactive --token ${firebaseToken} --only hosting"
                 echo 'Deploy Stage Finished'
             }
         }

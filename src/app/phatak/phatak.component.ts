@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { addDoc, collection, deleteDoc, doc, Firestore, getDocs, onSnapshot, setDoc, Timestamp } from '@angular/fire/firestore';
 import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
-import { FormControl, FormGroup, FormArray } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-phatak',
@@ -15,12 +15,33 @@ export class PhatakComponent implements OnInit {
 
   phatakForm = new FormGroup(
     {
-      phatakName: new FormControl(''),
-      inchargeName: new FormControl(''),
-      inchargePhone: new FormControl(''),
-      latitude: new FormControl(''),
-      longitude: new FormControl(''),
-      phatakImage: new FormControl(''),
+      phatakName: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(5), 
+        Validators.maxLength(20), 
+        Validators.pattern('[a-zA-Z]')
+      ]),
+      inchargeName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      inchargePhone: new FormControl('', [
+        Validators.pattern('[0-9]'),
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(10),
+      ]),
+      latitude: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[0-9]'),
+      ]),
+      longitude: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[0-9]'),
+      ]),
+      phatakImage: new FormControl('', [
+
+      ]),
       phatakId: new FormControl(''),
       status: new FormControl(),
       timings: new FormArray([])
@@ -100,8 +121,10 @@ export class PhatakComponent implements OnInit {
     let docRef = doc(this.firestore, 'crossings/', value['phatakId']);
     setDoc(docRef, value)
     .then(()=>{
+      alert("Data Saved");
       console.log("Data Saved");
-      this.phatakForm.reset();
+      this.getTimingsArrayFromPhatakForm().clear();
+      this.phatakForm.reset({});
       this.showForm = !this.showForm;
     }, (error) => {
       console.error(error);
@@ -126,7 +149,7 @@ export class PhatakComponent implements OnInit {
   updatePhatak(phatak) {
     this.showForm = true;
     
-    // let datePipe = new DatePipe('en-US');
+    let datePipe = new DatePipe('en-US');
     // phatak.timings.forEach(element => {
     //   element['time'] = datePipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm');
     // });
@@ -142,8 +165,21 @@ export class PhatakComponent implements OnInit {
         phatakImage: phatak.phatakImage,
         phatakId: phatak.phatakId,
         status: phatak.status,
-        timings: phatak.timings,
+        // timings: new FormArray(phatak.timings.length === 0 ? [] : phatak.timings.map(element => new FormGroup({
+        //   // time: new FormControl(datePipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm')),
+        //   time: new FormControl(element.time),
+        //   trafficStatus: new FormControl(element.trafficStatus),
+        //   train: new FormControl(element.train)
+        // })))
       }
     );
+
+    phatak.timings.forEach(element => {
+      this.getTimingsArrayFromPhatakForm().push(new FormGroup({
+        time: new FormControl(datePipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm')),
+        trafficStatus: new FormControl(element.trafficStatus),
+        train: new FormControl(element.train)
+      }))
+    });
   }
 }

@@ -36,11 +36,11 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                bat "firebase deploy --non-interactive --token ${firebaseToken} --only hosting"
-                echo 'Deploy Stage Finished'
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         bat "firebase deploy --non-interactive --token ${firebaseToken} --only hosting"
+        //         echo 'Deploy Stage Finished'
+        //     }
+        // }
     }
 }

@@ -13,11 +13,16 @@
       <div class="form-container-phatak">
         <form [formGroup]="phatakForm" (ngSubmit)="addPhatakToFirebase()">
           <h3 class="add-phatak mb-3">Add New Phatak</h3>
-
+          
           <div class="mb-3">
             <label for="phatakName" class="form-label form-field-phatak">Phatak Name:</label>
-            <input type="text" id="phatakName" name="phatakName" formControlName="phatakName" class="form-control form-field-input-phatak">
+            <input type="text" id="phatakName" name="phatakName" formControlName="phatakName" required class="form-control form-field-input-phatak">
             <div class="form-field-phatak container-2-phatak"></div>
+            <span class="text-danger" *ngIf="phatakForm.get('phatakName')?.invalid && (phatakForm.get('phatakName').dirty || phatakForm.get('phatakName').touched)">
+              <div *ngIf="phatakForm.get('phatakName').hasError('required')">Phatak Name is Required</div>
+              <div *ngIf="phatakForm.get('phatakName').hasError('minlength')">Phatak Name should be greater than 5 characters</div>
+              <!-- <div *ngIf="phatakForm.get('phatakName').hasError('pattern')">Phatak Name should be alphabets</div> -->
+            </span>
           </div>
       
           <div class="mb-3">
@@ -98,7 +103,7 @@
 
   <!-- Show Phatak List -->
   <div class="align-center">
-    <div class="container mt-3 px-3 scrollable" *ngIf="!showForm">
+    <div class="container mt-3 px-3 scrollable" style="border-right: solid rgba(255, 255, 255, 0.342) 1em;" *ngIf="!showForm">
       <h2 style="text-align: center;">Phatak Lists</h2>
       <table class="table phatak-list-container">
         <thead>
@@ -114,10 +119,16 @@
         <tbody>
           <tr *ngFor="let phatak of phataksList; index as idx">
             <td>{{ idx+1 }}</td>
-            <td>{{ phatak.phatakName }}</td>
+            <!-- <td>{{ phatak.phatakName }}</td> -->
+            <td>
+              <div class="d-flex gap-2">
+                <img [src]="phatak.phatakImage" alt="" class="img-fluid rounded" width="64px" height="64px">
+                <span>{{ phatak.phatakName }}</span>
+              </div>
+            </td>
             <td>{{ phatak.inchargeName }}</td>
             <td>{{ phatak.inchargePhone }}</td>
-            <td>[{{ phatak.latitude }}, {{ phatak.longitude }}]</td>
+            <td>[{{ phatak.location.latitude }}, {{ phatak.location.longitude }}]</td>
             <td>{{ phatak.status }}</td>
             <button class="btn btn-sm btn-phatak btn-update-delete-phatak" (click)="updatePhatak(phatak)">Update</button>
             <button class="btn btn-sm btn-danger btn-update-delete-phatak" (click)="deletePhatak(phatak['id'])">Delete</button>
